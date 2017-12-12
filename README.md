@@ -11,7 +11,9 @@ All the platform/design specific definitions such as peripheral base addresses, 
 
 The MiV_RV32IMAF_L1_AHB firmware projects need the riscv_hal and the hal firmware (RISC-V HAL).
 
-The RISC-V HAL is available through Firmware catalog as well as [from the GitHub repository](https://github.com/RISCV-on-Microsemi-FPGA/riscv-hal).
+The RISC-V HAL is available through Firmware catalog as well as [from the GitHub repository](https://github.com/RISCV-on-Microsemi-FPGA/riscv-hal):
+
+https://github.com/RISCV-on-Microsemi-FPGA/riscv-hal
 
 # How to use this example
 This example project requires USB-UART interface to be connected to a host PC. The project is not using anything else than UART, no other internal/external peripheral is required. It's using default settings at 115200 baud rate. On Windows The host PC must connect to the serial port using a terminal emulator such as HyperTerminal or PuTTY configured as follows:
@@ -26,6 +28,7 @@ Linux users could use:
 screen /dev/ttyUSB0 115200
 ``` 
 Or any equivalent serial terminal application (e.g. minicom). For more help see:
+
 https://wiki.archlinux.org/index.php/working_with_the_serial_console
 
 Project settings have predefined **MSCC_STDIO_THRU_CORE_UART_APB** so all regular printf calls should be redirected to UART. This allows the code be generic enough to run on x86 **Linux** host. A script **runOnLinuxHost.sh** script and **Raytracer-on-Linux-host** launcher are made for this purpose.
@@ -46,8 +49,11 @@ The program is called withing few loops so the sphere will be "rendered" under d
 
 # C++
 Even this project is using C++, it still might not be the right language for other embedded applications. In C++ it's easier to write code which will be resources heavy. Features such as RTTI are consuming a significant amount of memory. Exception handling might impact runtime performance. Overall caucious approach should be taken when using C++ for an embedded target and researching/testing how each feature will impact the target. More information:
+
 https://electronics.stackexchange.com/questions/3027/is-c-suitable-for-embedded-systems
+
 https://stratifylabs.co/embedded%20design%20tips/2017/09/15/Tips-Understanding-Memory-using-Embedded-C++/
+
 http://bitbashing.io/embedded-cpp.html
 
 
@@ -55,20 +61,29 @@ http://bitbashing.io/embedded-cpp.html
 Links which might be useful:
 
 https://www.ics.uci.edu/~gopi/CS211B/RayTracing%20tutorial.pdf
+
 https://tmcw.github.io/literate-raytracer/
+
 http://www.3dcpptutorials.sk/index.php?id=16
+
 http://mathforum.org/mathimages/index.php/Ray_Tracing
 
 https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector
+
 https://youtu.be/KDHuWxy53uM
+
 https://en.wikipedia.org/wiki/Phong_reflection_model
 
 http://en.cppreference.com/w/c/numeric/math
+
 http://en.cppreference.com/w/cpp/language/operators
+
 http://en.cppreference.com/w/cpp/language/cast_operator
+
 http://en.cppreference.com/w/cpp/language/explicit
 
 https://coderwall.com/p/nb9ngq/better-getting-array-size-in-c
+
 https://stackoverflow.com/questions/926752/why-should-i-prefer-to-use-member-initialization-list
 
 # Target hardware
@@ -82,6 +97,7 @@ The release mode configuration for this example project uses microsemi-riscv-ram
 linker script. This Linker script is specific for the SmartFusion2 target. It creates the executable image for the SRAM memory area. 
 
 An example design for SmartFusion2 90 Security Eval Kit is available at:
+
 https://github.com/RISCV-on-Microsemi-FPGA/M2S090-Security-Eval-Kit
 
 # Silicon revision dependencies
