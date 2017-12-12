@@ -1,6 +1,6 @@
 # Simple ASCII Raytracer
 
-This SoftConsole C++ example project demonstrates how to floating point arithmetic on a Mi-V Soft processor running **50MHz**. 
+This SoftConsole C++ example project demonstrates how to floating point arithmetic on a Mi-V Soft processor running **50MHz**.  
 
 ![screenshot](images/screenshot01.png)
 
@@ -16,7 +16,7 @@ The RISC-V HAL is available through Firmware catalog as well as [from the GitHub
 https://github.com/RISCV-on-Microsemi-FPGA/riscv-hal
 
 # How to use this example
-This example project requires USB-UART interface to be connected to a host PC. The project is not using anything else than UART, no other internal/external peripheral is required. It's using default settings at 115200 baud rate. On Windows The host PC must connect to the serial port using a terminal emulator such as HyperTerminal or PuTTY configured as follows:
+This example project requires USB-UART interface to be connected to a host PC. The project is not using anything else than UART, no other internal/external peripheral is required. It's using default settings at 115200 baud rate. By default it's using 80x40 terminal. On Windows The host PC must connect to the serial port using a terminal emulator such as HyperTerminal or PuTTY configured as follows:
 * 115200 baud
 * 8 data bits
 * 1 stop bit
@@ -30,6 +30,8 @@ screen /dev/ttyUSB0 115200
 Or any equivalent serial terminal application (e.g. minicom). For more help see:
 
 https://wiki.archlinux.org/index.php/working_with_the_serial_console
+
+Project has enabled the C++ Compiler Preprocessor defines and using the **SERIAL_TERMINAL_ANIMATION** to use the [VT100 control escape sequences](http://www.termsys.demon.co.uk/vtansi.htm) to move cursor and turn the output into pseudo "animation". If the terminal is not supporting the control escape sequences then it might display strangely rendered symbols on the first line. If this is not desired, removing the define from the project settings will disable this "animation" feature.
 
 Project settings have predefined **MSCC_STDIO_THRU_CORE_UART_APB** so all regular printf calls should be redirected to UART. This allows the code be generic enough to run on x86 **Linux** host. A script **runOnLinuxHost.sh** script and **Raytracer-on-Linux-host** launcher are made for this purpose.
 

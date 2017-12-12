@@ -174,22 +174,23 @@ Shade calculateShadeOfTheRay(Ray ray, Light light) {
 }
 
 int main() {
-  for (float zoom = 13.0f; zoom <= 33.0f; zoom+=10.0f) {
+  for (float zoom = 12.0f; zoom <= 32.0f; zoom+=10.0f) {
     for (float lightRotate = 0.0f; lightRotate < 2.0f * M_PI_F; lightRotate += M_PI_F / 11.0f) {
-      //printf("\033[2J");
       printf("Zoom=%1.1f, lighRotate=%3.1f\n", logf(zoom), (180.0f * lightRotate) / M_PI_F);
       Light light(Vector3(2.0f * WIDTH  *  cosf(lightRotate),
                           3.0f * HEIGHT * (sinf(lightRotate)-0.5f), -100.0f), Shade(0.7f));
       // Calculate ray for each pixel on the scene
-      for (int y = 0; y < HEIGHT; y++) {
+      for (int y = 2; y < HEIGHT; y++) { // dedicate lines for the printf
         for (int x = 0; x < WIDTH; x++) {
           Ray rayForThisPixel( Vector3(0.0f,        0.0f,          0.0f),
                               ~Vector3(x - WIDTH/2, y - HEIGHT /2, zoom));
           putchar(calculateShadeOfTheRay(rayForThisPixel, light));
         }
-        printf("\n"); // Print break line after all columns for a new row of rays
-
+        if (y < HEIGHT) printf("\n"); // print break after each row except the very last
       }
+#ifdef SERIAL_TERMINAL_ANIMATION
+      printf("\033[%dA", HEIGHT); // http://www.termsys.demon.co.uk/vtansi.htm
+#endif
     }
   }
   return 0;
