@@ -41,6 +41,8 @@ The launcher should be visible from external tools. If it's not, then it might b
 
 The program is called withing few loops so the sphere will be "rendered" under different "zoom" levels and under different lighting conditions. All the output can be observed only through UART (not GPIO LEDs or anything else present).
 
+**Note:** The **SERIAL_TERMINAL_ANIMATION** is in the  **C++** Compiler Preprocessor defines while the **MSCC_STDIO_THRU_CORE_UART_APB** is in the  **C** Compiler Preprocessor defines.
+
 # Features
 * Using C++ (templates, classes, inheritance, overloading arithmetic/casting operators, private fields with public methods etc...)
 * Small source codebase, single file ~200 lines long.
