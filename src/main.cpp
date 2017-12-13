@@ -28,7 +28,7 @@ template<size_t SIZE, class T> inline size_t array_size(T (&arr)[SIZE]) {
 struct Shade {
   float value;
 
-  //https://stackoverflow.com/questions/926752/why-should-i-prefer-to-use-member-initialization-list
+  // https://stackoverflow.com/questions/926752/why-should-i-prefer-to-use-member-initialization-list
   Shade(): value(0.0f) {
   }
 
@@ -162,10 +162,10 @@ Shade calculateShadeOfTheRay(Ray ray, Light light) {
     float   diffuse      = fmaxf(0.0f, hitLight % hitNormal);    // How similar are they?
     float   specular     = fmaxf(0.0f, hitLight % hitReflected); // How similar are they?
 
-    // diffuse = similarity (dot product) of hitLight and hitNormal
+    // diffuse  = similarity (dot product) of hitLight and hitNormal
     // specular = similarity (dot product) of hitLight and hitReflected
     // https://youtu.be/KDHuWxy53uM
-    // And use the diffuse / specular only when they are positive
+    // And use the diffuse and specular only when they are positive
     // simplifiedPhongShading = specular + diffuse + ambient
     // https://en.wikipedia.org/wiki/Phong_reflection_model
     shadeOfTheRay = light.shade * powf(specular, SMOOTHNESS) + light.shade * diffuse + ambient;
@@ -180,13 +180,13 @@ int main() {
       Light light(Vector3(2.0f * WIDTH  *  cosf(lightRotate),
                           3.0f * HEIGHT * (sinf(lightRotate)-0.5f), -100.0f), Shade(0.7f));
       // Calculate ray for each pixel on the scene
-      for (int y = 2; y < HEIGHT; y++) { // dedicate lines for the printf
+      for (int y = 2; y < HEIGHT; y++) { // dedicate few lines for top/bottom margins
         for (int x = 0; x < WIDTH; x++) {
           Ray rayForThisPixel( Vector3(0.0f,        0.0f,          0.0f),
                               ~Vector3(x - WIDTH/2, y - HEIGHT /2, zoom));
           putchar(calculateShadeOfTheRay(rayForThisPixel, light));
         }
-        if (y < HEIGHT) printf("\n"); // print break after each row except the very last
+        printf("\n"); // print break after each row
       }
 #ifdef SERIAL_TERMINAL_ANIMATION
       printf("\033[%dA", HEIGHT); // http://www.termsys.demon.co.uk/vtansi.htm
