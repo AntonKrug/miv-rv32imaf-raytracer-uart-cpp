@@ -1,6 +1,6 @@
 # Simple ASCII Raytracer
 
-This SoftConsole C++ example project demonstrates how to floating point arithmetic on a Mi-V Soft processor running **50MHz**.  
+This SoftConsole C++ example project demonstrates how to use floating point arithmetic on a Mi-V Soft processor running at **50MHz**.  
 
 ![screenshot](images/screenshot01.png)
 
