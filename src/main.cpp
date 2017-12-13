@@ -189,7 +189,7 @@ int main() {
         printf("\n"); // print break after each row
       }
 #ifdef SERIAL_TERMINAL_ANIMATION
-      printf("\033[%dA", HEIGHT); // http://www.termsys.demon.co.uk/vtansi.htm
+      printf("\033[0;0H"); // http://www.termsys.demon.co.uk/vtansi.htm
 #endif
     }
   }
