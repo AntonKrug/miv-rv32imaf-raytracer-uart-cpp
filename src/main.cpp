@@ -133,8 +133,8 @@ public:
     Vector3 inRef   = ray.source - this->center;
     float   dotDir  = ray.direction % ray.direction;
     float   temp1   = ray.direction % inRef;
-    float   temp2   = (inRef % inRef) - this->radius * this->radius;
-    float   tempAll = temp1 * temp1 - dotDir * temp2;
+    float   temp2   = (inRef % inRef) - (this->radius * this->radius);
+    float   tempAll = (temp1 * temp1) - (dotDir * temp2);
 
     if (tempAll < 0.0f) return false; // The ray didn't hit the sphere at all
 
@@ -157,7 +157,7 @@ Shade calculateShadeOfTheRay(Ray ray, Light light) {
     // The ray hit the sphere, let's find the bounce angle and shade it
     // https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector
     Vector3 hitNormal    = sphere ^ hitPoint;
-    Vector3 hitReflected = ray.direction - (hitNormal * 2.0f *(ray.direction % hitNormal));
+    Vector3 hitReflected = ray.direction - (hitNormal * 2.0f * (ray.direction % hitNormal));
     Vector3 hitLight     = ~(light - hitPoint);
     float   diffuse      = fmaxf(0.0f, hitLight % hitNormal);    // How similar are they?
     float   specular     = fmaxf(0.0f, hitLight % hitReflected); // How similar are they?
@@ -182,8 +182,8 @@ int main() {
       // Calculate ray for each pixel on the scene
       for (int y = 2; y < HEIGHT; y++) { // dedicate few lines for top/bottom margins
         for (int x = 0; x < WIDTH; x++) {
-          Ray rayForThisPixel( Vector3(0.0f,        0.0f,          0.0f),
-                              ~Vector3(x - WIDTH/2, y - HEIGHT /2, zoom));
+          Ray rayForThisPixel( Vector3(0.0f,            0.0f,             0.0f),
+                              ~Vector3(x - (WIDTH / 2), y - (HEIGHT / 2), zoom));
           putchar(calculateShadeOfTheRay(rayForThisPixel, light));
         }
         printf("\n"); // print break after each row
