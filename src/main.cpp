@@ -193,5 +193,8 @@ int main() {
 #endif
     }
   }
+#ifndef EXIT_FROM_THE_INFINITE_LOOP
+  while(1);
+#endif
   return 0;
 }
