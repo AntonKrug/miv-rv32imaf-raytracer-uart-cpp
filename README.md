@@ -1,13 +1,13 @@
 # Simple ASCII Raytracer
 
-This SoftConsole C++ example project demonstrates how to use floating point arithmetic on a Mi-V Soft processor running at **50MHz**.  
+This SoftConsole C++ example project demonstrates how to use floating point arithmetic on a Mi-V Soft processor running at **40MHz**. There are 2 variants of launch configurations, **hardfloat** which will use the F extensions on RISC-V and **softfloat** which will use software implementation of single floating point number.
 
 ![screenshot](images/screenshot01.png)
 
 # Mi-V Soft processor
 This example uses a Mi-V Soft processor MiV_RV32IMAF_L1_AHB. The design is built for debugging MiV_RV32IMAF_L1_AHB through the SmartFusion2 FPGA programming JTAG port using a FlashPro5. 
 
-All the platform/design specific definitions such as peripheral base addresses, system clock frequency (preconfigured for 50MHz) etc. are included in hw_platform.h. The hw_platform.h is located at the **src** folder of this project.
+All the platform/design specific definitions such as peripheral base addresses, system clock frequency (preconfigured for 40MHz) etc. are included in hw_platform.h. The hw_platform.h is located at the **src** folder of this project.
 
 The MiV_RV32IMAF_L1_AHB firmware projects need the riscv_hal and the hal firmware (RISC-V HAL).
 
@@ -91,7 +91,7 @@ https://coderwall.com/p/nb9ngq/better-getting-array-size-in-c
 https://stackoverflow.com/questions/926752/why-should-i-prefer-to-use-member-initialization-list
 
 # Target hardware
-This example project is targeted at a SmartFusion2 M2S090 Security Eval Kit design which has CoreUART enabled. The example project is built using a clock frequency of 50MHz. Trying to execute this example project on a different design will result in incorrect baud rate being used by CoreUART.
+This example project is targeted at a SmartFusion2 M2S090 Security Eval Kit design which has CoreUART enabled. The example project is built using a clock frequency of 40MHz. Trying to execute this example project on a different design will result in incorrect baud rate being used by CoreUART.
 
 ![Target board photo](images/target.jpg)
 
