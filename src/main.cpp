@@ -1,6 +1,6 @@
 /*******************************************************************
  * (c) Copyright 2016-2017 Microsemi SoC Products Group. All rights reserved.
- * Simple ray tracer written in 200 lines of C++
+ * Simple ray tracer written in ~200 lines of C++
  * version 1.0 - 01/12/2017 by anton.krug@microsemi.com
  * Using UART at 115200 baudrate with MiV Core running 50MHz
  * References:
@@ -13,12 +13,21 @@
 #include <stdio.h>
 #include <float.h>
 #include <cmath>
+#include "../tests/test-utils.h"
 
-#define WIDTH  80          // Terminal's columns
-#define HEIGHT 40          // Terminal's rows
-#define SMOOTHNESS 20.5f   // Affects shininess of the sphere
+#define WIDTH  80             // Terminal's columns
+#define HEIGHT 40             // Terminal's rows
+#define SMOOTHNESS 20.5f      // Affects shininess of the sphere
 
-#define M_PI_F 3.14159265f // Single floating point version of M_PI
+#ifndef ITERATIONS
+#define ITERATIONS 1          // How many times the same the frame should be repeated
+#endif
+
+#ifndef ROTATION_STEPS
+#define ROTATION_STEPS 11.0f  // More steps will make the movement smoother
+#endif
+
+#define M_PI_F 3.14159265f    // Single floating point version of M_PI
 
 // https://coderwall.com/p/nb9ngq/better-getting-array-size-in-c
 template<size_t SIZE, class T> inline size_t array_size(T (&arr)[SIZE]) {
@@ -170,29 +179,35 @@ Shade calculateShadeOfTheRay(Ray ray, Light light) {
     // https://en.wikipedia.org/wiki/Phong_reflection_model
     shadeOfTheRay = light.shade * powf(specular, SMOOTHNESS) + light.shade * diffuse + ambient;
   }
+  testAddToChecksumFloat(shadeOfTheRay.value); // Calculating checksums for automated tests
   return shadeOfTheRay;
 }
 
 int main() {
   for (float zoom = 12.0f; zoom <= 32.0f; zoom+=10.0f) {
-    for (float lightRotate = 0.0f; lightRotate < 2.0f * M_PI_F; lightRotate += M_PI_F / 11.0f) {
-      printf("Zoom=%1.1f, lighRotate=%3.1f\n", logf(zoom), (180.0f * lightRotate) / M_PI_F);
-      Light light(Vector3(2.0f * WIDTH  *  cosf(lightRotate),
-                          3.0f * HEIGHT * (sinf(lightRotate)-0.5f), -100.0f), Shade(0.7f));
-      // Calculate ray for each pixel on the scene
-      for (int y = 2; y < HEIGHT; y++) { // dedicate few lines for top/bottom margins
-        for (int x = 0; x < WIDTH; x++) {
-          Ray rayForThisPixel( Vector3(0.0f,            0.0f,             0.0f),
-                              ~Vector3(x - (WIDTH / 2), y - (HEIGHT / 2), zoom));
-          putchar(calculateShadeOfTheRay(rayForThisPixel, light));
+    for (float lightRotate = 0.0f; lightRotate < 2.0f * M_PI_F; lightRotate += M_PI_F / ROTATION_STEPS) {
+      for (int iteration = 0; iteration < ITERATIONS; iteration++) {
+        printf("Zoom=%1.1f, lighRotate=%3.1f\n", logf(zoom), (180.0f * lightRotate) / M_PI_F);
+        Light light(Vector3(2.0f * WIDTH  *  cosf(lightRotate),
+                            3.0f * HEIGHT * (sinf(lightRotate)-0.5f), -100.0f), Shade(0.7f));
+        // Calculate ray for each pixel on the scene
+        for (int y = 2; y < HEIGHT; y++) { // dedicate few lines for top/bottom margins
+          for (int x = 0; x < WIDTH; x++) {
+            Ray rayForThisPixel( Vector3(0.0f,            0.0f,             0.0f),
+                                ~Vector3(x - (WIDTH / 2), y - (HEIGHT / 2), zoom));
+            putchar(calculateShadeOfTheRay(rayForThisPixel, light));
+          }
+          printf("\n"); // print break after each row
         }
-        printf("\n"); // print break after each row
-      }
 #ifdef SERIAL_TERMINAL_ANIMATION
       printf("\033[0;0H"); // http://www.termsys.demon.co.uk/vtansi.htm
 #endif
+      }
     }
   }
+
+  testValidate(ITERATIONS, 1); // if GDB testing is enabled, it will validate the checksums
+
 #ifndef EXIT_FROM_THE_INFINITE_LOOP
   while(1);
 #endif
