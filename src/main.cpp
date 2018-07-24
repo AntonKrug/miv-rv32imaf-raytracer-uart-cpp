@@ -2,7 +2,7 @@
  * (c) Copyright 2016-2017 Microsemi SoC Products Group. All rights reserved.
  * Simple ray tracer written in ~200 lines of C++
  * version 1.0 - 01/12/2017 by anton.krug@microsemi.com
- * Using UART at 115200 baudrate with MiV Core running 50MHz
+ * Using UART at 115200 baudrate with MiV Core running 40MHz
  * References:
  * https://www.ics.uci.edu/~gopi/CS211B/RayTracing%20tutorial.pdf
  * https://tmcw.github.io/literate-raytracer/
