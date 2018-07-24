@@ -187,7 +187,6 @@ int main() {
   for (float zoom = 12.0f; zoom <= 32.0f; zoom+=10.0f) {
     for (float lightRotate = 0.0f; lightRotate < 2.0f * M_PI_F; lightRotate += M_PI_F / ROTATION_STEPS) {
       for (int iteration = 0; iteration < ITERATIONS; iteration++) {
-        printf("Zoom=%1.1f, lighRotate=%3.1f\n", logf(zoom), (180.0f * lightRotate) / M_PI_F);
         Light light(Vector3(2.0f * WIDTH  *  cosf(lightRotate),
                             3.0f * HEIGHT * (sinf(lightRotate)-0.5f), -100.0f), Shade(0.7f));
         // Calculate ray for each pixel on the scene
