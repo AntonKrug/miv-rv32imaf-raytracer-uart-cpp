@@ -5,7 +5,7 @@
  * Mi-V soft processor linker script for creating a SoftConsole downloadable
  * debug image executing in SRAM.
  * 
- * This linker script assumes that the DDR is connected at on the Mi-V soft
+ * This linker script assumes that the SRAM is connected at on the Mi-V soft
  * processor memory space. The start address and size of the memory space must
  * be correct as per the Libero design.
  *
@@ -19,13 +19,13 @@ ENTRY(_start)
 
 MEMORY
 {
-    ram (rwx) : ORIGIN = 0x80000000, LENGTH = 128k
+    ram (rwx) : ORIGIN = 0x80000000, LENGTH = 64k
 }
 
 RAM_START_ADDRESS   = 0x80000000;       /* Must be the same value MEMORY region ram ORIGIN above. */
-RAM_SIZE            = 128k;              /* Must be the same value MEMORY region ram LENGTH above. */
-STACK_SIZE          = 4k;               /* needs to be calculated for your application */             
-HEAP_SIZE           = 4k;               /* needs to be calculated for your application */
+RAM_SIZE            = 64k;              /* Must be the same value MEMORY region ram LENGTH above. */
+STACK_SIZE          = 2k;               /* needs to be calculated for your application */             
+HEAP_SIZE           = 2k;               /* needs to be calculated for your application */
 
 SECTIONS
 {
