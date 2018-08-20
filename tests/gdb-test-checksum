@@ -28,11 +28,20 @@ test_display_enviroment iteration
 
 # Compare correct expected checksum with the actual calculated value, consider 
 # that the checksum changes depending how many times the algorithm was iterated
+
 if (current_configuration & 4)
-    # hard float
-    assert_equals 0x4d6cd0bc*iteration actualChecksum
+    # Hard float
+    
+    if (current_configuration & 8)
+        # Debug hard variant has different results than
+        assert_equals 0x4d6cd0bc*iteration actualChecksum
+    else
+        # release hard variant
+        assert_equals 0x4d6cbb18*iteration actualChecksum
+    end
+        
 else
-    # soft float
+    # Soft float, for both Debug/Release gives same results
     assert_equals 0x4d6cd0a7*iteration actualChecksum
 end
 
