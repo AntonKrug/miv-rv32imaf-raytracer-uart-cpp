@@ -71,7 +71,7 @@ end
 
 define test_setup_default
   # Connect to OpenOCD / GDB server
-  connect_openocd_default
+  connect_openocd_default $arg0
   
   # Load the ELF file to the target
   load $arg0
